@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="bg-ink px-5 py-[52px] sm:px-12 lg:px-20 flex items-center justify-between gap-6 border-t border-white/[0.06] flex-wrap">
       <div>
-        <div className="font-display text-[22px] font-black text-white tracking-[-0.5px]">
+        <div className="font-display text-[22px] font-extrabold text-white tracking-[-0.5px]">
           {nameParts ? (
             <>
               {nameParts[1]}

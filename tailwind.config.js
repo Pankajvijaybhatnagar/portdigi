@@ -18,7 +18,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-jakarta)", "sans-serif"],
-        display: ["var(--font-fraunces)", "serif"],
+        display: ["var(--font-jakarta)", "sans-serif"],
       },
       borderRadius: {
         lg2: "20px",

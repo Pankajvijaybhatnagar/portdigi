@@ -19,34 +19,16 @@ img {
   background: rgba(245, 166, 35, 0.22);
 }
 
-/* Reusable eyebrow label with flanking rule */
+/* Reusable eyebrow label — quiet, uppercase, no decoration */
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #f5a623;
-  margin-bottom: 14px;
-}
-.eyebrow::before {
-  content: "";
-  width: 22px;
-  height: 2px;
-  background: #f5a623;
-  border-radius: 2px;
-  flex-shrink: 0;
+  color: #86868b;
+  margin-bottom: 12px;
 }
 .eyebrow.center {
-  justify-content: center;
-}
-.eyebrow.center::after {
-  content: "";
-  width: 22px;
-  height: 2px;
-  background: #f5a623;
-  border-radius: 2px;
-  flex-shrink: 0;
+  text-align: center;
 }

@@ -37,7 +37,7 @@ export default function Navbar() {
           scrolled ? "shadow-[0_4px_30px_rgba(0,0,0,0.07)]" : ""
         }`}
       >
-        <div className="font-display text-[22px] font-black tracking-[-0.5px] text-ink">
+        <div className="font-display text-[22px] font-extrabold tracking-[-0.5px] text-ink">
           {nameParts ? (
             <>
               {nameParts[1]}
@@ -68,7 +68,7 @@ export default function Navbar() {
 
         <a
           href="#contact"
-          className="hidden lg:inline-block bg-orange text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_4px_16px_rgba(245,166,35,0.32)] transition-all hover:bg-orange-dk hover:-translate-y-px"
+          className="hidden lg:inline-block bg-orange text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-colors hover:bg-orange-dk"
         >
           Let&apos;s Talk
         </a>

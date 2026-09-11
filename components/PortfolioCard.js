@@ -1,23 +1,5 @@
 import Image from "next/image";
 
-const FALLBACK_STYLES = {
-  branding: "bg-gradient-to-br from-navy via-[#3030BB] to-orange",
-  social: "bg-gradient-to-br from-[#FF6B35] to-orange",
-  ads: "bg-gradient-to-br from-[#1DB954] to-[#0a8a35]",
-  web: "bg-gradient-to-br from-[#667EEA] to-[#764BA2]",
-  content: "bg-gradient-to-br from-[#764BA2] to-[#667EEA]",
-  all: "bg-gradient-to-br from-navy to-ink",
-};
-
-const FALLBACK_ICONS = {
-  branding: "✦",
-  social: "📱",
-  ads: "🎯",
-  web: "🌐",
-  content: "🎬",
-  all: "📊",
-};
-
 const SIZE_CLASSES = {
   "gc-7": "lg:col-span-7",
   "gc-5": "lg:col-span-5",
@@ -32,57 +14,74 @@ const ASPECT_CLASSES = {
   "gc-4": "aspect-[6/3] lg:aspect-[7/3]",
 };
 
-export default function PortfolioCard({ item, gcClass, onOpen }) {
+export default function PortfolioCard({ item, gcClass, index = 0, onOpen }) {
   const hasImage = !!item.image;
   const hasUrl = !!item.website;
-  const fallbackStyle = FALLBACK_STYLES[item.filter] || FALLBACK_STYLES.all;
-  const fallbackIcon = FALLBACK_ICONS[item.filter] || FALLBACK_ICONS.all;
+  const comingSoon = !!item.comingSoon;
 
   return (
     <div
-      className={`col-span-1 group ${SIZE_CLASSES[gcClass]} rounded-lg2 overflow-hidden bg-cloud cursor-pointer transition-transform duration-300 flex flex-col hover:-translate-y-2 hover:shadow-[0_28px_64px_rgba(0,0,0,0.13)]`}
+      className={`col-span-1 group ${SIZE_CLASSES[gcClass]} rounded-lg2 overflow-hidden bg-cloud transition-shadow duration-300 flex flex-col hover:shadow-[0_20px_52px_rgba(0,0,0,0.1)] ${
+        hasUrl ? "cursor-pointer" : "cursor-default"
+      }`}
       onClick={() => hasUrl && onOpen(item.website)}
     >
       <div
         className={`relative w-full flex-1 overflow-hidden ${ASPECT_CLASSES[gcClass]}`}
       >
+        <div className="absolute top-3 left-3 z-10 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-ink text-[10px] font-bold tabular-nums pointer-events-none">
+          {String(index + 1).padStart(2, "0")}
+        </div>
+
         {hasImage ? (
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            className="object-cover"
-          />
+          <>
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              className="object-cover"
+            />
+            {item.blurb && (
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                <p className="text-white text-[13px] leading-[1.6]">{item.blurb}</p>
+              </div>
+            )}
+          </>
         ) : (
-          <div
-            className={`w-full h-full min-h-[200px] flex flex-col items-center justify-center gap-3.5 p-8 relative ${fallbackStyle}`}
-          >
-            <div className="text-[52px]">{fallbackIcon}</div>
-            <div className="font-display text-lg font-black text-white text-center">
+          <div className="w-full h-full min-h-[200px] flex flex-col items-center justify-center gap-3 p-8 relative bg-ink">
+            <div className="font-display text-lg font-bold text-white text-center">
               {item.tag}
             </div>
-            <div className="text-[10px] tracking-[3px] uppercase text-white/40 text-center">
-              {hasUrl ? "Click to view website" : "Add image in CONFIG"}
+            <div className="text-[10px] tracking-[3px] uppercase text-white/35 text-center">
+              {hasUrl
+                ? "Click to view website"
+                : comingSoon
+                ? "In the works"
+                : "Add image in CONFIG"}
             </div>
           </div>
         )}
 
         {!hasImage && (
-          <div className="absolute top-3 right-3 bg-white/[0.18] backdrop-blur-sm border border-dashed border-white/50 text-white text-[11px] font-bold px-3 py-1.5 rounded-full tracking-[0.5px] pointer-events-none">
-            {hasUrl ? "🌐 Website" : "＋ Add Creative"}
+          <div className="absolute top-3 right-3 bg-white/10 backdrop-blur-sm text-white text-[11px] font-semibold px-3 py-1.5 rounded-full tracking-[0.5px] pointer-events-none">
+            {hasUrl ? "Website" : comingSoon ? "Coming Soon" : "Add Creative"}
           </div>
         )}
       </div>
 
       <div className="flex items-center justify-between px-5 py-[18px] bg-white border-t border-silver flex-shrink-0">
         <div>
-          <div className="text-[10px] font-extrabold tracking-[1.5px] uppercase text-orange mb-1">
+          <div className="text-[10px] font-semibold tracking-[1.5px] uppercase text-orange mb-1">
             {item.tag}
           </div>
           <div className="text-sm font-bold text-ink">{item.title}</div>
         </div>
-        <div className="w-9 h-9 rounded-full border-2 border-silver flex items-center justify-center text-muted text-[15px] flex-shrink-0 transition-colors group-hover:bg-orange group-hover:border-orange group-hover:text-white">
-          {hasUrl ? "↗" : "→"}
+        <div
+          className={`w-9 h-9 rounded-full border border-silver flex items-center justify-center text-muted text-[15px] flex-shrink-0 transition-colors ${
+            hasUrl ? "group-hover:bg-ink group-hover:border-ink group-hover:text-white" : ""
+          }`}
+        >
+          {hasUrl ? "↗" : comingSoon ? "···" : "→"}
         </div>
       </div>
     </div>
