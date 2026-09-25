@@ -32,9 +32,10 @@ export default function IframeViewer({ url, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-label="Website Preview"
-      className={`fixed inset-0 z-[2000] bg-black/85 backdrop-blur-md flex flex-col items-center justify-center transition-opacity duration-300 ${
-        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      className={`fixed inset-0 z-[2000] bg-black/85 backdrop-blur-md flex flex-col items-center justify-center transition-[opacity,visibility] duration-300 ${
+        open ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
       }`}
+      aria-hidden={!open}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -74,7 +75,9 @@ export default function IframeViewer({ url, onClose }) {
         <div className="relative flex-1 flex flex-col">
           <div
             className={`absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white z-[1] transition-opacity duration-300 ${
-              loading ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+              // only intercept clicks while the viewer is actually open — otherwise this
+              // invisible layer would sit over the middle of the page and block it
+              open && loading ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             }`}
           >
             <div className="w-10 h-10 rounded-full border-[3px] border-silver border-t-orange animate-spin" />

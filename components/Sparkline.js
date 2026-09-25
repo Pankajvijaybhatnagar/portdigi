@@ -1,6 +1,6 @@
 // Catmull-Rom -> cubic Bezier, so the line reads as a smooth trend curve
 // instead of a jagged connect-the-dots polyline.
-function smoothPath(coords) {
+export function smoothPath(coords) {
   if (coords.length < 3) {
     return "M " + coords.map(([x, y]) => `${x},${y}`).join(" L ");
   }

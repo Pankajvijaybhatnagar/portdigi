@@ -2,6 +2,7 @@
 
 import { CONFIG, maskHandle } from "@/lib/config";
 import Reveal from "./Reveal";
+import GrowthRunner from "./GrowthRunner";
 import { useInView, useCountUp, formatCount } from "./useCountUp";
 
 const GROWTH = CONFIG.growthStory;
@@ -36,61 +37,15 @@ export default function Results() {
       <Reveal>
         <div
           ref={chartRef}
-          className="relative bg-cloud rounded-lg2 border-[1.5px] border-silver px-6 py-10 sm:px-10 sm:py-14 overflow-hidden"
+          className="relative bg-cloud rounded-lg2 border-[1.5px] border-silver px-3 pt-20 pb-8 sm:px-10 sm:pt-32 sm:pb-14 overflow-hidden"
         >
           {/* Growth chart */}
-          <div className="relative w-full max-w-[720px] mx-auto">
-            <svg
-              viewBox="0 0 720 300"
-              className="w-full h-auto"
-              role="img"
-              aria-label="Line chart showing Facebook followers rising from 16,000 in December 2025 to 250,000 now"
-            >
-              <defs>
-                <linearGradient id="growthFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#F5A623" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="#F5A623" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-
-              {/* baseline */}
-              <line x1="40" y1="248" x2="680" y2="248" stroke="#E5E1D8" strokeWidth="1.5" />
-
-              {/* area under curve */}
-              <path
-                d="M 60 232 C 250 224, 380 210, 460 140 C 540 70, 600 46, 660 40 L 660 248 L 60 248 Z"
-                fill="url(#growthFill)"
-              />
-
-              {/* growth line */}
-              <path
-                d="M 60 232 C 250 224, 380 210, 460 140 C 540 70, 600 46, 660 40"
-                fill="none"
-                stroke="#F5A623"
-                strokeWidth="4"
-                strokeLinecap="round"
-                pathLength="1"
-                style={{
-                  strokeDasharray: 1,
-                  strokeDashoffset: chartInView ? 0 : 1,
-                  transition: "stroke-dashoffset 1.4s ease-out",
-                }}
-              />
-
-              {/* start marker */}
-              <circle cx="60" cy="232" r="7" fill="#FFFFFF" stroke="#F5A623" strokeWidth="3" />
-              {/* end marker */}
-              <circle
-                cx="660"
-                cy="40"
-                r="8"
-                fill="#F5A623"
-                style={{
-                  opacity: chartInView ? 1 : 0,
-                  transition: "opacity 0.4s ease-out 1.1s",
-                }}
-              />
-            </svg>
+          <div className="relative w-full max-w-[820px] mx-auto">
+            <GrowthRunner
+              before={GROWTH.before.value}
+              after={GROWTH.after.value}
+              milestones={[50000, 100000, 150000, 200000]}
+            />
 
             {/* Before / After labels anchored under the chart */}
             <div className="flex justify-between mt-2 px-[4%]">
